@@ -20,17 +20,13 @@ export async function PUT(request, { params }) {
     try {
         const { id } = await params;
         const body = await request.json();
-        const { title, content, coverimage, author } = body;
-        
+        const { title, content, coverimage, author } = body;       
         const promisePool = mysqlPool.promise();
         
-        // เช็คก่อนว่ามีบล็อกนี้อยู่จริงไหม
         const [exists] = await promisePool.query('SELECT id FROM blogs WHERE id = ?', [id]);
         if (exists.length === 0) {
             return NextResponse.json({ message: "Not found" }, { status: 404 });
         }
-
-        // อัปเดตข้อมูลลงฐานข้อมูล
         await promisePool.query(
             'UPDATE blogs SET title = ?, content = ?, coverimage = ?, author = ? WHERE id = ?',
             [title, content, coverimage, author, id]

@@ -15,7 +15,6 @@ export default function EditBlogPage() {
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
 
-  // ดึงข้อมูลบล็อกเก่ามาใส่ฟอร์ม
   useEffect(() => {
     (async () => {
       const res = await fetch(`/api/blogs/${id}`);
@@ -35,8 +34,6 @@ export default function EditBlogPage() {
   }, [id]);
 
   const onChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
-
-  // ฟังก์ชันตอนกดเซฟ
   async function onSubmit(e) {
     e.preventDefault();
     setSaving(true); 
@@ -44,7 +41,7 @@ export default function EditBlogPage() {
 
     try {
       const res = await fetch(`/api/blogs/${id}`, {
-        method: "PUT", // ใช้ Method PUT สำหรับการแก้ไข
+        method: "PUT", 
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(form)
       });
@@ -52,7 +49,7 @@ export default function EditBlogPage() {
       const data = await res.json();
       if (!res.ok) throw new Error(data?.error || "แก้ไขไม่สำเร็จ");
       
-      router.push(`/blogs/${id}`); // กลับไปหน้าอ่านบทความ
+      router.push(`/blogs/${id}`); 
     } catch (err) {
       setError(err.message);
     } finally {
@@ -63,20 +60,64 @@ export default function EditBlogPage() {
   if (loading) return <div>กำลังโหลดข้อมูล...</div>;
 
   return (
-    <div style={{ maxWidth: 640, margin: "24px auto" }}>
-      <h1>แก้ไขบทความ</h1>
-      
-      <form onSubmit={onSubmit} style={{ display: "grid", gap: 12 }}>
-        <input name="title" placeholder="หัวข้อ" value={form.title} onChange={onChange} required />
-        <input name="coverimage" placeholder="URL รูปหน้าปก" value={form.coverimage} onChange={onChange} required />
-        <input name="author" placeholder="ชื่อผู้เขียน" value={form.author} onChange={onChange} required />
-        <textarea name="content" placeholder="เนื้อหา..." rows={6} value={form.content} onChange={onChange} required />
-        
-        <button disabled={saving}>{saving ? "กำลังบันทึก..." : "บันทึกการแก้ไข"}</button>
-        {error && <div style={{ color: "red" }}>{error}</div>}
-      </form>
-      
-      <p><Link href={`/blogs/${id}`}>ยกเลิก</Link></p>
+   <div className="main-content-wrapper">
+  <form className="neo-form-container" onSubmit={onSubmit}> 
+    <h1 className="neo-form-title">📝 แก้ไขบทความ</h1>
+
+    <div className="neo-form-group">
+       <label className="neo-label">ผู้เขียน (Author)</label>
+  <input
+    type="text"
+    name="author"
+    value={form.author}
+    onChange={onChange}
+    className="neo-input"
+    placeholder="ชื่อผู้เขียน..."
+  />
+      <label className="neo-label">ชื่อบทความ (Title)</label>
+      <input
+        type="text"
+        name="title"              
+        value={form.title}      
+        onChange={onChange}       
+        className="neo-input"
+        placeholder="พิมพ์ชื่อบทความที่นี่..."
+        required
+      />
     </div>
+
+    <div className="neo-form-group">
+      <label className="neo-label">หน้าปก (Cover Image URL)</label>
+      <input
+        type="text"
+        name="coverimage"         
+        value={form.coverimage}   
+        onChange={onChange}      
+        className="neo-input"
+        placeholder="https://..."
+      />
+    </div>
+
+    <div className="neo-form-group">
+      <label className="neo-label">เนื้อหา (Content)</label>
+      <textarea
+        name="content"            
+        value={form.content}     
+        onChange={onChange}      
+        className="neo-input"
+        placeholder="เล่าเรื่องราวของคุณ..."
+        required
+      />
+    </div>
+
+    {error && (
+      <p style={{ color: 'red', fontWeight: 700 }}>{error}</p> 
+    )}
+
+    <button type="submit" className="neo-submit-btn" disabled={saving}>
+      {saving ? "กำลังบันทึก..." : "POST BLOG 🚀"}  
+    </button>
+  </form>
+</div>
   );
 }

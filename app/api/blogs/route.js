@@ -13,9 +13,7 @@ export async function GET(request) {
 export async function POST(request) {
     try {
         const body = await request.json();
-        // รับค่าให้ตรงกับคอลัมน์ในตาราง blogs ของเรา
         const { title, content, coverimage, author } = body; 
-        
         const promisePool = mysqlPool.promise();
         const [result] = await promisePool.query(
             'INSERT INTO blogs (title, content, coverimage, author) VALUES (?, ?, ?, ?)',
