@@ -14,7 +14,7 @@ export default function NewBlogPage() {
   const onChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
 
   async function onSubmit(e) {
-    e.preventDefault();          // ห้าม browser reload
+    e.preventDefault();          
     setSaving(true);
     setError("");
 
@@ -39,16 +39,16 @@ export default function NewBlogPage() {
 
   return (
     <div className="main-content-wrapper">
-      <form className="neo-form-container" onSubmit={onSubmit}> {/* ✅ เพิ่ม onSubmit */}
+      <form className="neo-form-container" onSubmit={onSubmit}> 
         <h1 className="neo-form-title">📝 สร้างบทความใหม่</h1>
 
         <div className="neo-form-group">
           <label className="neo-label">ชื่อบทความ (Title)</label>
           <input
             type="text"
-            name="title"           // ✅ เพิ่ม
-            value={form.title}     // ✅ เพิ่ม
-            onChange={onChange}    // ✅ เพิ่ม
+            name="title"          
+            value={form.title}    
+            onChange={onChange}    
             className="neo-input"
             placeholder="พิมพ์ชื่อบทความที่นี่..."
             required
@@ -59,9 +59,9 @@ export default function NewBlogPage() {
           <label className="neo-label">หน้าปก (Cover Image URL)</label>
           <input
             type="text"
-            name="coverimage"      // ✅ เพิ่ม
-            value={form.coverimage}// ✅ เพิ่ม
-            onChange={onChange}    // ✅ เพิ่ม
+            name="coverimage"     
+            value={form.coverimage}
+            onChange={onChange}   
             className="neo-input"
             placeholder="https://..."
           />
@@ -70,9 +70,9 @@ export default function NewBlogPage() {
         <div className="neo-form-group">
           <label className="neo-label">เนื้อหา (Content)</label>
           <textarea
-            name="content"         // ✅ เพิ่ม
-            value={form.content}   // ✅ เพิ่ม
-            onChange={onChange}    // ✅ เพิ่ม
+            name="content"        
+            value={form.content}  
+            onChange={onChange}   
             className="neo-input"
             placeholder="เล่าเรื่องราวของคุณ..."
             required
@@ -83,7 +83,7 @@ export default function NewBlogPage() {
           <label className="neo-label">ผู้เขียน (Author)</label>
           <input
             type="text"
-            name="author"          // ✅ เพิ่ม field author กลับมา
+            name="author"         
             value={form.author}
             onChange={onChange}
             className="neo-input"

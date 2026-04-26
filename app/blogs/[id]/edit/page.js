@@ -15,7 +15,6 @@ export default function EditBlogPage() {
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
 
-  // ดึงข้อมูลบล็อกเก่ามาใส่ฟอร์ม
   useEffect(() => {
     (async () => {
       const res = await fetch(`/api/blogs/${id}`);
@@ -35,8 +34,6 @@ export default function EditBlogPage() {
   }, [id]);
 
   const onChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
-
-  // ฟังก์ชันตอนกดเซฟ
   async function onSubmit(e) {
     e.preventDefault();
     setSaving(true); 
@@ -44,7 +41,7 @@ export default function EditBlogPage() {
 
     try {
       const res = await fetch(`/api/blogs/${id}`, {
-        method: "PUT", // ใช้ Method PUT สำหรับการแก้ไข
+        method: "PUT", 
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(form)
       });
@@ -52,7 +49,7 @@ export default function EditBlogPage() {
       const data = await res.json();
       if (!res.ok) throw new Error(data?.error || "แก้ไขไม่สำเร็จ");
       
-      router.push(`/blogs/${id}`); // กลับไปหน้าอ่านบทความ
+      router.push(`/blogs/${id}`); 
     } catch (err) {
       setError(err.message);
     } finally {
@@ -64,7 +61,7 @@ export default function EditBlogPage() {
 
   return (
    <div className="main-content-wrapper">
-  <form className="neo-form-container" onSubmit={onSubmit}> {/* เพิ่ม onSubmit */}
+  <form className="neo-form-container" onSubmit={onSubmit}> 
     <h1 className="neo-form-title">📝 แก้ไขบทความ</h1>
 
     <div className="neo-form-group">
@@ -80,9 +77,9 @@ export default function EditBlogPage() {
       <label className="neo-label">ชื่อบทความ (Title)</label>
       <input
         type="text"
-        name="title"              // เพิ่ม name
-        value={form.title}        // เพิ่ม value
-        onChange={onChange}       // เพิ่ม onChange
+        name="title"              
+        value={form.title}      
+        onChange={onChange}       
         className="neo-input"
         placeholder="พิมพ์ชื่อบทความที่นี่..."
         required
@@ -93,9 +90,9 @@ export default function EditBlogPage() {
       <label className="neo-label">หน้าปก (Cover Image URL)</label>
       <input
         type="text"
-        name="coverimage"         // เพิ่ม name
-        value={form.coverimage}   // เพิ่ม value
-        onChange={onChange}       // เพิ่ม onChange
+        name="coverimage"         
+        value={form.coverimage}   
+        onChange={onChange}      
         className="neo-input"
         placeholder="https://..."
       />
@@ -104,9 +101,9 @@ export default function EditBlogPage() {
     <div className="neo-form-group">
       <label className="neo-label">เนื้อหา (Content)</label>
       <textarea
-        name="content"            // เพิ่ม name
-        value={form.content}      // เพิ่ม value
-        onChange={onChange}       // เพิ่ม onChange
+        name="content"            
+        value={form.content}     
+        onChange={onChange}      
         className="neo-input"
         placeholder="เล่าเรื่องราวของคุณ..."
         required
@@ -114,11 +111,11 @@ export default function EditBlogPage() {
     </div>
 
     {error && (
-      <p style={{ color: 'red', fontWeight: 700 }}>{error}</p>  // เพิ่ม error message
+      <p style={{ color: 'red', fontWeight: 700 }}>{error}</p> 
     )}
 
     <button type="submit" className="neo-submit-btn" disabled={saving}>
-      {saving ? "กำลังบันทึก..." : "POST BLOG 🚀"}  {/* เพิ่ม loading state */}
+      {saving ? "กำลังบันทึก..." : "POST BLOG 🚀"}  
     </button>
   </form>
 </div>
