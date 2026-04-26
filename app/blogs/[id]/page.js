@@ -61,8 +61,6 @@ export default function BlogDetailPage() {
   return (
     <div className="main-content-wrapper">
       <article className="neo-detail-card">
-
-        {/* action bar: กลับ / แก้ไข / ลบ */}
         <div className="neo-detail-actions">
           <Link href="/blogs" className="neo-detail-back">← กลับ</Link>
           <div className="neo-detail-action-btns">
@@ -79,7 +77,6 @@ export default function BlogDetailPage() {
           </div>
         </div>
 
-        {/* header: avatar + author */}
         <div className="neo-head">
           <div className="neo-author-avatar">
             {blog.author?.charAt(0)?.toUpperCase() || 'A'}
@@ -88,25 +85,16 @@ export default function BlogDetailPage() {
         </div>
 
         <div className="neo-content">
-          {/* cover image */}
           {blog.coverimage && (
             <div className="neo-detail-cover">
               <img src={blog.coverimage} alt={blog.title} />
             </div>
           )}
-
-          {/* title */}
           <h1 className="neo-detail-title">{blog.title}</h1>
-
-          {/* divider */}
           <div className="neo-detail-divider" />
-
-          {/* content */}
           <div className="neo-detail-content">
             {blog.content}
           </div>
-
-          {/* error */}
           {error && (
             <p className="neo-detail-error">{error}</p>
           )}
